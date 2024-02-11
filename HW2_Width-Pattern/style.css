@@ -1,0 +1,26 @@
+.pixel {
+     border: 1px solid blue;
+     display: inline-block;
+}
+
+#input-x1, #input-x2,
+#input-y1, #input-y2 {
+     width: 75px;
+     height: 25px;
+     margin-block: 5px;
+}
+
+#input-width, #input-pMask {
+     margin-block: 5px;
+     
+     height: 25px;
+}
+
+#input-width {
+     width: 75px;
+}
+
+#input-pMask {
+     width: 150px;
+     margin-bottom: 10px;
+}
