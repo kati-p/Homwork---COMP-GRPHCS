@@ -3,11 +3,34 @@ import matplotlib.pyplot as plt
 import math
 
 # Bezier-Spline Curve
-
 def Bez(k, n, u):
    return math.comb(n,k) * pow(u, k) * pow((1-u), n-k)
 
 def Bezier_Curve(cp, num_points = 100):
+   
+   n = len(cp) - 1
+
+   cpx = cp[:, 0]
+   cpy = cp[:, 1]
+
+   x = []
+   y = []
+
+   plotting = np.linspace(0, 1, num_points)
+   for u in plotting :
+         px = sum(cpx[k] * Bez(k, n, u) for k in range(n+1))
+         x.append(px)
+         py = sum(cpy[k] * Bez(k, n, u) for k in range(n+1))
+         y.append(py)
+   plt.plot(x, y, color='blue')
+
+# Bezier-Spline Curve Recursive
+def Bez_Recur(k, n, u):
+   if k == n: return pow(u, k)
+   if k == 0: return pow((1-u), k)
+   if (n > k and k >= 1): return ((1-u) * Bez_Recur(k, n-1, u)) + (u * Bez_Recur(k-1, n-1, u))
+   return ValueError
+def Bezier_Curve_Recur(cp, num_points = 100):
    
    n = len(cp) - 1
 
@@ -68,12 +91,14 @@ def B_Curve_Uniform(cp, degreePoly, num_points = 1000):
           py = bspline(u, knots, cpy, d)
           y.append(py)
      plt.plot(x, y, color='magenta')
- 
-        
-cp = np.array( [(15, 10), (25, 30), (35, 15)] )
+
+
+# define your control point
+cp = np.array( [(15, 10), (25, 30), (35, 15), (55, 10), (65,40)] )
 cbp =np.array( [(10, 10), (20, 30), (30, -10), (50, 10), (60,40)] )
 
-Bezier_Curve(cp)
+#Bezier_Curve(cp)
+Bezier_Curve_Recur(cp)
 B_Curve_Uniform(cbp, 2)
 
 plt.plot([], [], label='Bezier Curve', color='blue')
